@@ -45,9 +45,14 @@ function getExpiration(key) {
 
 // ex: localStorage.setCacheItem("favColor", "blue", { days: 1 })
 Storage.prototype.setCacheItem = function (key, value, exp) {
-    // BROKEN: ADDING 2 SET ITEMS
-
-    var val = (typeof value == 'object') ? JSON.stringify(value) : value; // assume json obj if type = 'object'; stringify it
+    var val = null;
+    if (typeof value == 'object') {
+        // assume json
+        value.isJson = true; // add this flag, so we can check it on retrieval
+        val = JSON.stringify(value);
+    } else {
+        val = value;
+    }
     localStorage.setItem(key, val);
 
     var now = new Date();
@@ -78,7 +83,7 @@ Storage.prototype.setCacheItem = function (key, value, exp) {
 
 Storage.prototype.getCacheItem = function (key) {
     // TODO: return JSON.parse if value is stringify'd json obj
-    
+
     // first, check to see if this key is in localstorage
     if (!localStorage.getItem(key)) {
         return null;
@@ -89,7 +94,19 @@ Storage.prototype.getCacheItem = function (key) {
     var expireDate = getExpiration(key);
     if (expireDate && now <= expireDate) {
         // hasn't expired yet, so simply return
-        return localStorage.getItem(key);
+        var value = localStorage.getItem(key);
+        try {
+            var parsed = JSON.parse(value);
+            if (parsed.isJson) {
+                delete parsed.isJson; // remove the extra flag we added in setCacheItem method; clean it up
+                return parsed;
+            } else {
+                return value; // return the string, since it could be trying to do JSON.parse("3") which will succeed and not throw an error, but "3" isn't a json obj
+            }
+        } catch (e) {
+            // string was not json-parsable, so simply return it as-is
+            return value;
+        }
     }
 
     // made it to here? remove item

@@ -1,5 +1,3 @@
-// TODO: fix localStorageExpirations having "" as value - fixed?
-
 function setExpiration(key, expireDate) {
     var expirations = localStorage.getItem("localStorageExpirations"); // "key1^11/18/2011 5pm|key2^3/10/2012 3pm"
     if (expirations) {

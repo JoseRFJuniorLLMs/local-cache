@@ -1,3 +1,8 @@
+// local-cache, localStorage with expirations
+// by Ian Davis, http://www.linkedin.com/in/ianhd and http://urlme.cc
+// 
+// Version 1.0
+
 function setExpiration(key, expireDate) {
     var expirations = localStorage.getItem("localStorageExpirations"); // "key1^11/18/2011 5pm|key2^3/10/2012 3pm"
     if (expirations) {

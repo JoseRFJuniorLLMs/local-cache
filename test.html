@@ -1,1 +1,53 @@
-<script src="localcache.js"></script>
+<script class="jsbin" src="http://ajax.googleapis.com/ajax/libs/jquery/1/jquery.min.js"></script>
+<script class="jsbin" src="json2.js"></script>
+<script class="jsbin" src="local-cache.js"></script>
+
+<style>
+    .debug { float: left; width: 615px; height: 185px; border: 1px solid black; padding: 5px; margin-right: 5px; }
+</style>
+
+<div class="debug" id="box">debug text here</div>
+<div class="debug" id="foo">debug text here</div>
+<div class="debug" id="favCar">debug text here</div>
+<div class="debug" id="favCars">debug text here</div>
+
+<script>
+
+    // ********* BROWSER TESTS *********
+    
+    // works in Safari, Firefox, Chrome, IE7-9
+    $.cacheItem("box1", "this should expire in one minute", { useCookies: true, expire: { minutes: 1 } });
+    setInterval(function () {
+        if ($("#box").find(".out").length < 7) {
+            var box1 = $.cacheItem("box1", { useCookies: true });
+            $("#box").append("<br/><span class='out'></span>15 sec later, box1 = " + box1);
+        }
+    }, 15000);
+
+    // works in Safari, Firefox, Chrome, IE7-9
+	$.cacheItem("foo1", "this should expire in one minute, auto-detect cookies vs. localStorage", { expire: { minutes: 1} });
+	setInterval(function () {
+	    if ($("#foo").find(".out").length < 7) {
+            var foo1 = $.cacheItem("foo1");
+	        $("#foo").append("<br/><span class='out'></span>15 sec later, foo1 = " + foo1);
+	    }
+	}, 15000);
+
+	// works in Safari, Firefox, Chrome, IE7-9
+	$.cacheItem("favCar", { make: "Honda", model: "Civic", year: 2012 }, { expire: { minutes: 1} });
+	setInterval(function () {
+	    if ($("#favCar").find(".out").length < 7) {
+            var favCar = $.cacheItem("favCar");
+	        $("#favCar").append("<br/><span class='out'></span>favCar.make & .year = " + (favCar && favCar.make) + " " + (favCar && favCar.year));
+	    }
+	}, 15000);
+
+	// works in Safari, Firefox, Chrome, IE7-9
+	$.cacheItem("favCars", [{ make: "Toyota", model: "Prius", year: 2010 }, { make: "Honda", model: "Civic", year: 2012}], { expire: { minutes: 1} });
+	setInterval(function () {
+	    if ($("#favCars").find(".out").length < 7) {
+            var favCars = $.cacheItem("favCars");
+	        $("#favCars").append("<br/><span class='out'></span>favCar[0].make & .year = " + (favCars && favCars[0].make) + " " + (favCars && favCars[0].year));
+	    }
+	}, 15000);
+</script>

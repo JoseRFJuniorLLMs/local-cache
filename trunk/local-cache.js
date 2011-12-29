@@ -60,6 +60,11 @@ function getExpirationDate(expObject) {
         return ret;
     }
 
+    if (expObject.date && expObject.date instanceof Date) {
+        console.log("local-cache.js plugin: expiration set to " + expObject.date.toString());
+        return expObject.date;
+    }
+
     if (expObject.atMidnight) {
         ret.setDate(now.getDate() + 1);
         ret.setHours(0, 0, 0, 0);

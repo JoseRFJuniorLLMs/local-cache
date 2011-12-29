@@ -3,16 +3,17 @@
 <script class="jsbin" src="local-cache.js"></script>
 
 <style>
-    .debug { float: left; width: 615px; height: 185px; border: 1px solid black; padding: 5px; margin-right: 5px; }
+    .debug { float: left; width: 615px; height: 185px; border: 1px solid black; padding: 5px; margin-right: 5px; margin-bottom:5px; }
 </style>
 
-<div class="debug" id="box">debug text here</div>
-<div class="debug" id="foo">debug text here</div>
-<div class="debug" id="favCar">debug text here</div>
-<div class="debug" id="favCars">debug text here</div>
+<div class="debug" id="box">wait for these to refresh every 15 sec...</div>
+<div class="debug" id="foo">...</div>
+<div class="debug" id="favCar">...</div>
+<div class="debug" id="favCars">...</div>
 
 <script>
 
+$(function() {
     // ********* BROWSER TESTS *********
     
     // works in Safari, Firefox, Chrome, IE7-9
@@ -20,7 +21,7 @@
     setInterval(function () {
         if ($("#box").find(".out").length < 7) {
             var box1 = $.cacheItem("box1", { useCookies: true });
-            $("#box").append("<br/><span class='out'></span>15 sec later, box1 = " + box1);
+            $("#box").append("<br/><span class='out'></span>box1 = " + box1);
         }
     }, 15000);
 
@@ -29,7 +30,7 @@
 	setInterval(function () {
 	    if ($("#foo").find(".out").length < 7) {
             var foo1 = $.cacheItem("foo1");
-	        $("#foo").append("<br/><span class='out'></span>15 sec later, foo1 = " + foo1);
+	        $("#foo").append("<br/><span class='out'></span>foo1 = " + foo1);
 	    }
 	}, 15000);
 
@@ -50,4 +51,5 @@
 	        $("#favCars").append("<br/><span class='out'></span>favCar[0].make & .year = " + (favCars && favCars[0].make) + " " + (favCars && favCars[0].year));
 	    }
 	}, 15000);
+});
 </script>

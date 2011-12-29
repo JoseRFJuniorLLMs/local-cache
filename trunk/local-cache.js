@@ -211,9 +211,9 @@ function getCookie(key) {
         }
     } else {
         // this is a SET, examples...
-        // $.cacheItem(key, { prop1: "val1" }, { useCookie: true, expire: { days: 5 } });
+        // $.cacheItem(key, { prop1: "val1" }, { useCookie: true, expires: { days: 5 } });
         // $.cacheItem(key, 15);
-        var expireDate = getExpirationDate(options && options.expire);
+        var expireDate = getExpirationDate(options && (options.expires || options.expire)); // in case user passed in options.expire or .expires
 
         // use localStorage if available, cookies otherwise
         if (options && options.useCookies) {

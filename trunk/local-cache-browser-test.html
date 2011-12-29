@@ -17,7 +17,7 @@ $(function() {
     // ********* BROWSER TESTS *********
     
     // works in Safari, Firefox, Chrome, IE7-9
-    $.cacheItem("box1", "this should expire in one minute", { useCookies: true, expire: { minutes: 1 } });
+    $.cacheItem("box1", "this should expire in one minute, useCookies:true override set", { useCookies: true, expire: { minutes: 1 } });
     setInterval(function () {
         if ($("#box").find(".out").length < 7) {
             var box1 = $.cacheItem("box1", { useCookies: true });

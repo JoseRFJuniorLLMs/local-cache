@@ -56,19 +56,19 @@ function getExpirationDate(expObject) {
 
     if (typeof expObject == 'undefined') {
         ret.setDate(now.getDate() + 1); // default to one day from now
-        console.log("local-cache.js plugin: expiration not specified, using " + ret.toString());
+        // console.log("local-cache.js plugin: expiration not specified, using " + ret.toString());
         return ret;
     }
 
     if (expObject.date && expObject.date instanceof Date) {
-        console.log("local-cache.js plugin: expiration set to " + expObject.date.toString());
+        // console.log("local-cache.js plugin: expiration set to " + expObject.date.toString());
         return expObject.date;
     }
 
     if (expObject.atMidnight) {
         ret.setDate(now.getDate() + 1);
         ret.setHours(0, 0, 0, 0);
-        console.log("local-cache.js plugin: expiration set to " + ret.toString());
+        // console.log("local-cache.js plugin: expiration set to " + ret.toString());
         return ret; // return if this is specified
     }
 
@@ -89,7 +89,7 @@ function getExpirationDate(expObject) {
         ret.setYear(now.getFullYear() + expObject.years);
     }
 
-    console.log("local-cache.js plugin: expiration set to " + ret.toString());
+    // console.log("local-cache.js plugin: expiration set to " + ret.toString());
     return ret;
 }
 
@@ -161,7 +161,7 @@ function setCookie(key, value, expireDate) {
     }
 
     key = escape(key);
-    console.log("local-cache.js plugin: setting cookie, " + key + "=" + val + "; expires=" + expireDate.toUTCString());
+    // console.log("local-cache.js plugin: setting cookie, " + key + "=" + val + "; expires=" + expireDate.toUTCString());
     document.cookie = key + "=" + val + "; expires=" + expireDate.toUTCString();
 }
 
@@ -202,15 +202,15 @@ function getCookie(key) {
     if (arguments.length == 1 || (arguments.length == 2 && typeof value == "object" && value.useCookies)) {
         // override exist for using cookies?
         if (value && value.useCookies) {
-            console.log("local-cache.js plugin: using cookies to get item (specified by { useCookies: true } override)");
+            // console.log("local-cache.js plugin: using cookies to get item (specified by { useCookies: true } override)");
             return getCookie(key);
         } else {
             // no override provided, so auto-detect
             if (typeof localStorage != 'undefined' && typeof Storage != 'undefined' && localStorage.getCacheItem != null) {
-                console.log("local-cache.js plugin: using localStorage to get item (auto-detected)");
+                // console.log("local-cache.js plugin: using localStorage to get item (auto-detected)");
                 return localStorage.getCacheItem(key);
             } else {
-                console.log("local-cache.js plugin: using cookies to get item (auto-detected)");
+                // console.log("local-cache.js plugin: using cookies to get item (auto-detected)");
                 return getCookie(key);
             }
         }
@@ -222,14 +222,14 @@ function getCookie(key) {
 
         // use localStorage if available, cookies otherwise
         if (options && options.useCookies) {
-            console.log("local-cache.js plugin: using cookies to set item (specified by { useCookies: true } override)");
+            // console.log("local-cache.js plugin: using cookies to set item (specified by { useCookies: true } override)");
             setCookie(key, value, expireDate);
         } else {
             if (typeof localStorage != 'undefined' && typeof Storage != 'undefined' && localStorage.setCacheItem != null) {
-                console.log("local-cache.js plugin: using localStorage to set item (auto-detected)");
+                // console.log("local-cache.js plugin: using localStorage to set item (auto-detected)");
                 localStorage.setCacheItem(key, value, expireDate);
             } else {
-                console.log("local-cache.js plugin: using cookies to set item (auto-detected)");
+                // console.log("local-cache.js plugin: using cookies to set item (auto-detected)");
                 setCookie(key, value, expireDate);
             }
         }
